@@ -19,15 +19,17 @@
     <p style="margin-left: 5cm;"><strong>Abstract</strong></p>
     <p style="margin-left: 5cm; margin-right: 5cm;">Deep learning has enabled remarkable advances in style transfer across various domains, offering new possibilities for creative content generation. However, in the realm of symbolic music, generating controllable and expressive performance-level style transfers for complete musical works remains challenging due to limited datasets, especially for genres such as jazz, and the lack of unified models that can handle multiple music generation tasks. This paper presents ImprovNet, a transformer-based architecture that generates expressive and controllable musical improvisations through a self-supervised corruption-refinement training strategy. ImprovNet unifies multiple capabilities within a single model: it can perform cross-genre and intra-genre improvisations, harmonize melodies with genre-specific styles, and execute short prompt continuation and infilling tasks. The model's iterative generation framework allows users to control the degree of style transfer and structural similarity to the original composition. Objective and subjective evaluations demonstrate ImprovNet's effectiveness in generating musically coherent improvisations while maintaining structural relationships with the original pieces. The model outperforms Anticipatory Music Transformer in short continuation and infilling tasks and successfully achieves recognizable genre conversion, with 79\% of participants correctly identifying jazz-style improvisations.</p>
 
-    <h2>Style Aware Improvisations</h2>
+    <div style="margin-left: 5cm;">
+        <h2>Style Aware Improvisations</h2>
+    </div>
 
     <div style="margin-left: 5cm;">
-        <h2>Example 1</h2>
+        <h3>Example 1</h3>
     </div>
     <table style="margin-left: 5cm !important; width: 80%; border-collapse: collapse; border: 2px solid black; text-align: center;">
         <tr>
-            <th style="width: 20%; border: 1px solid black; text-align: center;">Style</th>
-            <th style="width: 40%; border: 1px solid black; text-align: center;">Audio</th>
+            <th style="width: 30%; border: 1px solid black; text-align: center;">Style</th>
+            <th style="width: 30%; border: 1px solid black; text-align: center;">Audio</th>
             <th style="width: 40%; border: 1px solid black; text-align: center;">Description</th>
         </tr>
         <tr style="border-bottom: 1px solid black; text-align: center;">
@@ -48,12 +50,12 @@
     </table>
 
     <div style="margin-left: 5cm;">
-        <h2>Example 2</h2>
+        <h3>Example 2</h3>
     </div>
     <table style="margin-left: 5cm !important; width: 80%; border-collapse: collapse; border: 2px solid black; text-align: center;">
         <tr>
-            <th style="width: 20%; border: 1px solid black; text-align: center;">Style</th>
-            <th style="width: 40%; border: 1px solid black; text-align: center;">Audio</th>
+            <th style="width: 30%; border: 1px solid black; text-align: center;">Style</th>
+            <th style="width: 30%; border: 1px solid black; text-align: center;">Audio</th>
             <th style="width: 40%; border: 1px solid black; text-align: center;">Description</th>
         </tr>
         <tr style="border-bottom: 1px solid black; text-align: center;">
@@ -74,12 +76,12 @@
     </table>
     
     <div style="margin-left: 5cm;">
-        <h2>Example 3</h2>
+        <h3>Example 3</h3>
     </div>
     <table style="margin-left: 5cm !important; width: 80%; border-collapse: collapse; border: 2px solid black; text-align: center;">
         <tr>
-            <th style="width: 20%; border: 1px solid black; text-align: center;">Style</th>
-            <th style="width: 40%; border: 1px solid black; text-align: center;">Audio</th>
+            <th style="width: 30%; border: 1px solid black; text-align: center;">Style</th>
+            <th style="width: 30%; border: 1px solid black; text-align: center;">Audio</th>
             <th style="width: 40%; border: 1px solid black; text-align: center;">Description</th>
         </tr>
         <tr style="border-bottom: 1px solid black; text-align: center;">
@@ -100,12 +102,12 @@
     </table>
 
     <div style="margin-left: 5cm;">
-        <h2>Example 4</h2>
+        <h3>Example 4</h3>
     </div>
     <table style="margin-left: 5cm !important; width: 80%; border-collapse: collapse; border: 2px solid black; text-align: center;">
         <tr>
-            <th style="width: 20%; border: 1px solid black; text-align: center;">Style</th>
-            <th style="width: 40%; border: 1px solid black; text-align: center;">Audio</th>
+            <th style="width: 30%; border: 1px solid black; text-align: center;">Style</th>
+            <th style="width: 30%; border: 1px solid black; text-align: center;">Audio</th>
             <th style="width: 40%; border: 1px solid black; text-align: center;">Description</th>
         </tr>
         <tr style="border-bottom: 1px solid black; text-align: center;">
@@ -125,7 +127,74 @@
         </tr>
     </table>
 
-    <div style="margin-left: 5cm; margin-right: 5cm;">
+    <div style="margin-left: 5cm;">
+        <h2>Jazz Intra-Genre Improvisations</h2>
+    </div>
+
+    <div style="margin-left: 5cm;">
+        <h3>Example 1</h3>
+    </div>
+    <table style="margin-left: 5cm !important; width: 80%; border-collapse: collapse; border: 2px solid black; text-align: center;">
+        <tr>
+            <th style="width: 30%; border: 1px solid black; text-align: center;">Style</th>
+            <th style="width: 30%; border: 1px solid black; text-align: center;">Audio</th>
+            <th style="width: 40%; border: 1px solid black; text-align: center;">Description</th>
+        </tr>
+        <tr style="border-bottom: 1px solid black; text-align: center;">
+            <td>Original Jazz Example</td>
+            <td><audio src="Jazz_Intra_Genre_Improvisation/Example_1/Sample_2_1.mp3" controls ></audio></td>
+            <td></td>
+        </tr>
+        <tr style="border-bottom: 1px solid black; text-align: center;">
+            <td>Intra-Genre Improvisation (Jazz -> Jazz)</td>
+            <td><audio src="Jazz_Intra_Genre_Improvisation/Example_1/Sample_2_1_A.mp3" controls ></audio></td>
+            <td>-</td>
+        </tr>
+    </table>
+
+    <div style="margin-left: 5cm;">
+        <h3>Example 2</h3>
+    </div>
+    <table style="margin-left: 5cm !important; width: 80%; border-collapse: collapse; border: 2px solid black; text-align: center;">
+        <tr>
+            <th style="width: 30%; border: 1px solid black; text-align: center;">Style</th>
+            <th style="width: 30%; border: 1px solid black; text-align: center;">Audio</th>
+            <th style="width: 40%; border: 1px solid black; text-align: center;">Description</th>
+        </tr>
+        <tr style="border-bottom: 1px solid black; text-align: center;">
+            <td>Original Jazz Example</td>
+            <td><audio src="Jazz_Intra_Genre_Improvisation/Example_2/Sample_2_2.mp3" controls ></audio></td>
+            <td></td>
+        </tr>
+        <tr style="border-bottom: 1px solid black; text-align: center;">
+            <td>Intra-Genre Improvisation (Jazz -> Jazz)</td>
+            <td><audio src="Jazz_Intra_Genre_Improvisation/Example_2/Sample_2_2_A.mp3" controls ></audio></td>
+            <td>-</td>
+        </tr>
+    </table>
+
+    <div style="margin-left: 5cm;">
+        <h3>Example 3</h3>
+    </div>
+    <table style="margin-left: 5cm !important; width: 80%; border-collapse: collapse; border: 2px solid black; text-align: center;">
+        <tr>
+            <th style="width: 30%; border: 1px solid black; text-align: center;">Style</th>
+            <th style="width: 30%; border: 1px solid black; text-align: center;">Audio</th>
+            <th style="width: 40%; border: 1px solid black; text-align: center;">Description</th>
+        </tr>
+        <tr style="border-bottom: 1px solid black; text-align: center;">
+            <td>Original Jazz Example</td>
+            <td><audio src="Jazz_Intra_Genre_Improvisation/Example_3/Sample_2_3.mp3" controls ></audio></td>
+            <td></td>
+        </tr>
+        <tr style="border-bottom: 1px solid black; text-align: center;">
+            <td>Intra-Genre Improvisation (Jazz -> Jazz)</td>
+            <td><audio src="Jazz_Intra_Genre_Improvisation/Example_3/Sample_2_3_A.mp3" controls ></audio></td>
+            <td>-</td>
+        </tr>
+    </table>
+
+    <!-- <div style="margin-left: 5cm; margin-right: 5cm;">
         <video width="512" height="384" controls>
             <source src="Ground_Truth_Comparison/danmark1.mp4" type="video/mp4">
             Your browser does not support the video tag.
@@ -135,7 +204,7 @@
             <source src="Ground_Truth_Comparison/danmark1_YY.mp4" type="video/mp4">
             Your browser does not support the video tag.
         </video>
-    </div>
+    </div> -->
 
     <br /><br />
     <div style="margin-left: 5cm;">
