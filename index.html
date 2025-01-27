@@ -151,13 +151,32 @@
 
     <script src="https://cdn.jsdelivr.net/combine/npm/tone@14.7.58,npm/@magenta/music@1.23.1/es6/core.js,npm/focus-visible@5,npm/html-midi-player@1.5.0"></script>
 
+    Original Composition
     <midi-player
     src="Infilling/Example_1/original_original_10.mid"
     sound-font 
-    visualizer="#myVisualizer"
+    visualizer="#myVisualizer1"
     style="--midi-player-background: #061ffb; --midi-player-border-radius: 8px;">
     </midi-player>
-    <midi-visualizer type="piano-roll" id="myVisualizer"></midi-visualizer>
+    <midi-visualizer type="piano-roll" id="myVisualizer1"></midi-visualizer>
+
+    Anticipatory Music Transformer
+    <midi-player
+    src="Infilling/Example_1/amt_inpainted.mid"
+    sound-font 
+    visualizer="#myVisualizer2"
+    style="--midi-player-background: #061ffb; --midi-player-border-radius: 8px;">
+    </midi-player>
+    <midi-visualizer type="piano-roll" id="myVisualizer2"></midi-visualizer>
+
+    ImprovNet
+    <midi-player
+    src="Infilling/Example_1/generated_original_10.mid"
+    sound-font 
+    visualizer="#myVisualizer3"
+    style="--midi-player-background: #061ffb; --midi-player-border-radius: 8px;">
+    </midi-player>
+    <midi-visualizer type="piano-roll" id="myVisualizer3"></midi-visualizer>
 
     <!-- <div style="margin-left: 5cm; margin-right: 5cm;">
         <video width="512" height="384" controls>
