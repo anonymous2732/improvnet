@@ -26,6 +26,35 @@
             height: 300px; /* Adjust the height of the visualizer */
         }
 
+        .tabs {
+        display: flex;
+        cursor: pointer;
+        margin-bottom: 20px;
+        background-color: #f1f1f1;
+        border-bottom: 2px solid #ddd;
+        }
+        .tab {
+        flex: 1;
+        padding: 10px 20px;
+        text-align: center;
+        background-color: #e6e6e6;
+        border: 1px solid #ddd;
+        border-bottom: none;
+        }
+        .tab:hover {
+        background-color: #d6d6d6;
+        }
+        .tab.active {
+        background-color: #ffffff;
+        font-weight: bold;
+        }
+        .tab-content {
+        display: none;
+        }
+        .tab-content.active {
+        display: block;
+        }
+
     </style>
 
 </head>
@@ -151,7 +180,65 @@
 
     <script src="https://cdn.jsdelivr.net/combine/npm/tone@14.7.58,npm/@magenta/music@1.23.1/es6/core.js,npm/focus-visible@5,npm/html-midi-player@1.5.0"></script>
 
-    Original Composition
+    <div class="tabs">
+        <div class="tab active" onclick="showTab(0)">Original Composition</div>
+        <div class="tab" onclick="showTab(1)">Anticipatory Music Transformer</div>
+        <div class="tab" onclick="showTab(2)">ImprovNet</div>
+      </div>
+    
+      <div id="tab-contents">
+        <!-- Tab 1: Original Composition -->
+        <div class="tab-content active">
+          <midi-player
+            src="Infilling/Example_1/original_original_10.mid"
+            sound-font
+            visualizer="#myVisualizer1"
+            style="--midi-player-background: #061ffb; --midi-player-border-radius: 8px;">
+          </midi-player>
+          <midi-visualizer type="piano-roll" id="myVisualizer1"></midi-visualizer>
+        </div>
+    
+        <!-- Tab 2: Anticipatory Music Transformer -->
+        <div class="tab-content">
+          <midi-player
+            src="Infilling/Example_1/amt_inpainted.mid"
+            sound-font
+            visualizer="#myVisualizer2"
+            style="--midi-player-background: #061ffb; --midi-player-border-radius: 8px;">
+          </midi-player>
+          <midi-visualizer type="piano-roll" id="myVisualizer2"></midi-visualizer>
+        </div>
+    
+        <!-- Tab 3: ImprovNet -->
+        <div class="tab-content">
+          <midi-player
+            src="Infilling/Example_1/generated_original_10.mid"
+            sound-font
+            visualizer="#myVisualizer3"
+            style="--midi-player-background: #061ffb; --midi-player-border-radius: 8px;">
+          </midi-player>
+          <midi-visualizer type="piano-roll" id="myVisualizer3"></midi-visualizer>
+        </div>
+      </div>
+    
+      <script>
+        function showTab(index) {
+          const tabs = document.querySelectorAll('.tab');
+          const contents = document.querySelectorAll('.tab-content');
+          
+          // Remove active class from all tabs and contents
+          tabs.forEach((tab, i) => {
+            tab.classList.remove('active');
+            contents[i].classList.remove('active');
+          });
+          
+          // Add active class to the selected tab and content
+          tabs[index].classList.add('active');
+          contents[index].classList.add('active');
+        }
+      </script>
+
+    <!-- Original Composition
     <midi-player
     src="Infilling/Example_1/original_original_10.mid"
     sound-font 
@@ -176,7 +263,7 @@
     visualizer="#myVisualizer3"
     style="--midi-player-background: #061ffb; --midi-player-border-radius: 8px;">
     </midi-player>
-    <midi-visualizer type="piano-roll" id="myVisualizer3"></midi-visualizer>
+    <midi-visualizer type="piano-roll" id="myVisualizer3"></midi-visualizer> -->
 
     <!-- <div style="margin-left: 5cm; margin-right: 5cm;">
         <video width="512" height="384" controls>
