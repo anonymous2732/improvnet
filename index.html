@@ -130,13 +130,54 @@
         </tr>
     </table>
     
+    <div style="margin-left: 5cm;">
+        <h2>Short Infilling</h2>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/combine/npm/tone@14.7.58,npm/@magenta/music@1.23.1/es6/core.js,npm/focus-visible@5,npm/html-midi-player@1.4.0"></script>
+
+    <style>
+        midi-player {
+            width: 80%;
+            margin: 20px auto;
+        }
+    
+        midi-visualizer {
+            width: 100%;
+            height: 300px;
+        }
+    
+        .highlight {
+            background-color: rgba(255, 0, 0, 0.5); /* Red color with 50% opacity */
+        }
+    </style>
 
     <midi-player
     src="Infilling/Example_1/original_original_10.mid"
     sound-font visualizer="#myVisualizer">
     </midi-player>
     <midi-visualizer type="piano-roll" id="myVisualizer"></midi-visualizer>
+
+    <script>
+        const midiPlayer = document.getElementById('midiPlayer');
+        const visualizer = document.getElementById('myVisualizer');
+    
+        // Define the highlight time range in seconds
+        const highlightStart = 10;
+        const highlightEnd = 20;
+    
+        // Function to highlight the notes during the specified time range
+        midiPlayer.addEventListener('timeupdate', () => {
+            const currentTime = midiPlayer.currentTime;
+    
+            // Add a highlight if within the range, otherwise remove it
+            if (currentTime >= highlightStart && currentTime <= highlightEnd) {
+                visualizer.classList.add('highlight');
+            } else {
+                visualizer.classList.remove('highlight');
+            }
+        });
+    </script>
 
     <!-- <div style="margin-left: 5cm; margin-right: 5cm;">
         <video width="512" height="384" controls>
