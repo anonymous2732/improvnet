@@ -12,7 +12,34 @@
         .center-text {
             text-align: center;
         }
+
+        midi-player {
+        width: 50%;
+        max-width: 800px;
+        margin: 0 auto;
+        }
+
+        midi-visualizer {
+            width: 50%;
+            max-width: 800px;
+            margin: 0 auto;
+            height: 300px; /* Adjust the height of the visualizer */
+        }
+
+        .piano-roll-visualizer rect.note {
+            opacity: 0.6;
+        }
+
+        .piano-roll-visualizer rect.note.red {
+            fill: red !important;
+        }
+
+        .piano-roll-visualizer rect.note.blue {
+            fill: blue !important;
+        }
+
     </style>
+
 </head>
 <body>
     <h1 style="margin-left: 5cm;">ImprovNet: Generating Controllable Musical Improvisations with Iterative Corruption Refinement</h1>
@@ -136,24 +163,6 @@
 
     <script src="https://cdn.jsdelivr.net/combine/npm/tone@14.7.58,npm/@magenta/music@1.23.1/es6/core.js,npm/focus-visible@5,npm/html-midi-player@1.4.0"></script>
 
-    <style>
-        midi-player {
-            width: 50%;
-            margin: 20px auto;
-        }
-    
-        midi-visualizer {
-            width: 50%;
-            height: 300px;
-            background-color: white; /* Default background */
-            transition: background-color 0.2s; /* Smooth transition */
-        }
-    
-        midi-visualizer.highlight {
-            background-color: rgba(255, 0, 0, 0.5); /* Red background with 50% opacity */
-        }
-    </style>
-
     <midi-player
     src="Infilling/Example_1/original_original_10.mid"
     sound-font visualizer="#myVisualizer">
@@ -163,23 +172,30 @@
     <script>
         const midiPlayer = document.getElementById('midiPlayer');
         const visualizer = document.getElementById('myVisualizer');
-    
-        // Define the highlight time range in seconds
-        const highlightStart = 10; // Highlight starts at 10 seconds
-        const highlightEnd = 20;   // Highlight ends at 20 seconds
-    
-        // Function to highlight the visualizer during the specified time range
-        midiPlayer.addEventListener('timeupdate', () => {
-            const currentTime = midiPlayer.currentTime; // Get current playback time
-    
-            console.log('Current Time:', currentTime); // Debug: Log current playback time
-    
-            // Check if the current time is within the highlight range
-            if (currentTime >= highlightStart && currentTime <= highlightEnd) {
-                visualizer.classList.add('highlight'); // Add highlight class
-            } else {
-                visualizer.classList.remove('highlight'); // Remove highlight class
-            }
+
+        midiPlayer.addEventListener('play', () => {
+            // Start monitoring time
+            const interval = setInterval(() => {
+                const currentTime = midiPlayer.currentTime; // Current time in seconds
+                const notes = visualizer.shadowRoot.querySelectorAll('rect.note');
+
+                if (currentTime >= 10 && currentTime < 20) {
+                    notes.forEach(note => note.classList.add('red'));
+                    notes.forEach(note => note.classList.remove('blue'));
+                } else if (currentTime >= 20) {
+                    notes.forEach(note => note.classList.add('blue'));
+                    notes.forEach(note => note.classList.remove('red'));
+                }
+
+                if (currentTime >= midiPlayer.duration) {
+                    clearInterval(interval); // Stop monitoring when the music ends
+                }
+            }, 100); // Check every 100ms
+        });
+
+        midiPlayer.addEventListener('pause', () => {
+            // Clear intervals when playback is paused
+            clearInterval(interval);
         });
     </script>
 
