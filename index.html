@@ -26,16 +26,22 @@
             height: 300px; /* Adjust the height of the visualizer */
         }
 
-        .piano-roll-visualizer rect.note {
-            opacity: 0.6;
+        /* Custom visualizer colors */
+        midi-visualizer svg rect.note {
+        transition: fill 0.3s ease;
         }
 
-        .piano-roll-visualizer rect.note.red {
-            fill: red !important;
+        /* Time-based color animation */
+        @keyframes time-color {
+        0% { fill: #426AA0; }
+        33% { fill: #ff0000; }
+        66% { fill: #ff0000; }
+        100% { fill: #426AA0; }
         }
 
-        .piano-roll-visualizer rect.note.blue {
-            fill: blue !important;
+        midi-visualizer svg rect.note[data-start-seconds^="1"],
+        midi-visualizer svg rect.note[data-start-seconds^="2"] {
+        animation: time-color 20s linear infinite;
         }
 
     </style>
@@ -165,39 +171,32 @@
 
     <midi-player
     src="Infilling/Example_1/original_original_10.mid"
-    sound-font visualizer="#myVisualizer">
+    sound-font 
+    visualizer="#myVisualizer"
+    style="--midi-player-background: #f0f0f0; --midi-player-border-radius: 8px;">
     </midi-player>
     <midi-visualizer type="piano-roll" id="myVisualizer"></midi-visualizer>
 
     <script>
-        const midiPlayer = document.getElementById('midiPlayer');
-        const visualizer = document.getElementById('myVisualizer');
-
-        midiPlayer.addEventListener('play', () => {
-            // Start monitoring time
-            const interval = setInterval(() => {
-                const currentTime = midiPlayer.currentTime; // Current time in seconds
-                const notes = visualizer.shadowRoot.querySelectorAll('rect.note');
-
-                if (currentTime >= 10 && currentTime < 20) {
-                    notes.forEach(note => note.classList.add('red'));
-                    notes.forEach(note => note.classList.remove('blue'));
-                } else if (currentTime >= 20) {
-                    notes.forEach(note => note.classList.add('blue'));
-                    notes.forEach(note => note.classList.remove('red'));
-                }
-
-                if (currentTime >= midiPlayer.duration) {
-                    clearInterval(interval); // Stop monitoring when the music ends
-                }
-            }, 100); // Check every 100ms
+        // Dynamic time-based color changes
+        document.querySelector('midi-player').addEventListener('timeupdate', (e) => {
+          const currentTime = e.detail.time;
+          const notes = document.querySelectorAll('midi-visualizer rect.note');
+          
+          notes.forEach(note => {
+            const start = parseFloat(note.dataset.startSeconds);
+            const end = parseFloat(note.dataset.endSeconds);
+            
+            if (currentTime >= 10 && currentTime <= 20) {
+              if (start >= 10 && end <= 20) {
+                note.style.fill = '#ff0000';
+              }
+            } else {
+              note.style.fill = note.dataset.program === '0' ? '#426AA0' : '#B26789';
+            }
+          });
         });
-
-        midiPlayer.addEventListener('pause', () => {
-            // Clear intervals when playback is paused
-            clearInterval(interval);
-        });
-    </script>
+        </script>
 
     <!-- <div style="margin-left: 5cm; margin-right: 5cm;">
         <video width="512" height="384" controls>
