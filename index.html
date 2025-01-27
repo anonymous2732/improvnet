@@ -34,7 +34,7 @@
         }
 
     </style>
-<!-- <script src="https://cdn.jsdelivr.net/npm/html-midi-player@1.4.0"></script> -->
+<script src="https://cdn.jsdelivr.net/combine/npm/tone@14.7.58,npm/@magenta/music@1.23.1/es6/core.js,npm/html-midi-player@1.5.2"></script>
 </head>
 <body>
     <h1 style="margin-left: 5cm;">ImprovNet: Generating Controllable Musical Improvisations with Iterative Corruption Refinement</h1>
@@ -156,7 +156,7 @@
         <h2>Short Infilling</h2>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/combine/npm/tone@14.7.58,npm/@magenta/music@1.23.1/es6/core.js,npm/focus-visible@5,npm/html-midi-player@1.5.0"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/combine/npm/tone@14.7.58,npm/@magenta/music@1.23.1/es6/core.js,npm/focus-visible@5,npm/html-midi-player@1.5.0"></script> -->
 
     <!-- <midi-player
     src="Infilling/Example_1/original_original_10.mid"
@@ -167,18 +167,16 @@
     <midi-visualizer type="piano-roll" id="myVisualizer"></midi-visualizer> -->
 
     <midi-visualizer type="piano-roll"></midi-visualizer>
-    <midi-player
-        src="Infilling/Example_1/original_original_10.mid"
-        sound-font visualizer="#visualizer">
-    </midi-player>
+    <midi-player src="Infilling/Example_1/original_original_10.mid" sound-font visualizer="#visualizer"></midi-player>
 
     <script>
-        // Programmatically update note colors after load
         document.querySelector('midi-player').addEventListener('ready', () => {
-            const notes = document.querySelectorAll('rect.note');
-            notes.forEach((note, i) => {
-                // Alternate between program 0 and 1 for demonstration
-                note.setAttribute('data-program', i % 2);
+            // For solo piano, differentiate hands using channel 0 vs 1
+            const notes = document.querySelectorAll('midi-visualizer rect.note');
+            notes.forEach(note => {
+                const pitch = parseInt(note.getAttribute('data-pitch'));
+                // Example: Split at middle C (C4 = 60)
+                note.setAttribute('data-program', pitch >= 60 ? 0 : 1);
             });
         });
     </script>
