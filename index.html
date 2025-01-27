@@ -26,15 +26,8 @@
             height: 300px; /* Adjust the height of the visualizer */
         }
 
-        midi-visualizer svg rect.note[data-program="0"] {
-            fill: #426AA0; /* Blue */
-        }
-        midi-visualizer svg rect.note[data-program="1"] {
-            fill: #B26789; /* Red */
-        }
-
     </style>
-<!-- <script src="https://cdn.jsdelivr.net/combine/npm/tone@14.7.58,npm/@magenta/music@1.23.1/es6/core.js,npm/html-midi-player@1.5.2"></script> -->
+
 </head>
 <body>
     <h1 style="margin-left: 5cm;">ImprovNet: Generating Controllable Musical Improvisations with Iterative Corruption Refinement</h1>
@@ -158,28 +151,13 @@
 
     <script src="https://cdn.jsdelivr.net/combine/npm/tone@14.7.58,npm/@magenta/music@1.23.1/es6/core.js,npm/focus-visible@5,npm/html-midi-player@1.5.0"></script>
 
-    <!-- <midi-player
+    <midi-player
     src="Infilling/Example_1/original_original_10.mid"
     sound-font 
     visualizer="#myVisualizer"
-    style="--midi-player-background: #f0f0f0; --midi-player-border-radius: 8px;">
+    style="--midi-player-background: #061ffb; --midi-player-border-radius: 8px;">
     </midi-player>
-    <midi-visualizer type="piano-roll" id="myVisualizer"></midi-visualizer> -->
-
-    <midi-visualizer type="piano-roll"></midi-visualizer>
-    <midi-player src="Infilling/Example_1/original_original_10.mid" sound-font visualizer="#visualizer"></midi-player>
-
-    <script>
-        document.querySelector('midi-player').addEventListener('ready', () => {
-            // For solo piano, differentiate hands using channel 0 vs 1
-            const notes = document.querySelectorAll('midi-visualizer rect.note');
-            notes.forEach(note => {
-                const pitch = parseInt(note.getAttribute('data-pitch'));
-                // Example: Split at middle C (C4 = 60)
-                note.setAttribute('data-program', pitch >= 60 ? 0 : 1);
-            });
-        });
-    </script>
+    <midi-visualizer type="piano-roll" id="myVisualizer"></midi-visualizer>
 
     <!-- <div style="margin-left: 5cm; margin-right: 5cm;">
         <video width="512" height="384" controls>
