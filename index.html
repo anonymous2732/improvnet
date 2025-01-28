@@ -98,18 +98,20 @@
             cursor: pointer;
         }
 
-        /* Update canvas styling to match previous visualizer */
-        canvas {
-            border: 2px solid #426AA0;
-            border-radius: 8px;
-            padding: 10px;
-            margin-top: 10px;
-            width: 50%;
-            max-width: 800px;
-            margin-left: 5cm;
-            display: block; 
-            margin-bottom: 20px;
-            height: 200px; /* Set appropriate height */
+        /* Add color animation rules */
+        midi-visualizer svg rect.note {
+            transition: fill 0.3s ease;
+        }
+
+        /* Default color for all notes */
+        midi-visualizer svg rect.note {
+            fill: #426AA0 !important;
+        }
+
+        /* Red color for notes between 20-40 seconds */
+        midi-visualizer svg rect.note[data-start^="2"][data-start*="."],
+        midi-visualizer svg rect.note[data-start^="3"] {
+            fill: #ff0000 !important;
         }
 
     </style>
@@ -237,52 +239,6 @@
 
     <script src="https://cdn.jsdelivr.net/combine/npm/tone@14.7.58,npm/@magenta/music@1.23.1/es6/core.js,npm/focus-visible@5,npm/html-midi-player@1.5.0"></script>
 
-    <script>
-        // Add this script after loading Magenta
-        document.addEventListener('DOMContentLoaded', async () => {
-            const core = new mm.Core();
-            const visualizers = {};
-        
-            // Function to process MIDI files and create visualizations
-            async function createVisualizer(containerId, midiUrl) {
-                const response = await fetch(midiUrl);
-                const midiData = await response.arrayBuffer();
-                const sequence = await core.parseMidi(midiData);
-                
-                // Add color property based on timing
-                sequence.notes.forEach(note => {
-                    const start = note.startTime;
-                    if ((start >= 20 && start < 40)) {
-                        note.color = '#ff0000'; // Red for 20-40s
-                    } else {
-                        note.color = '#426AA0'; // Blue for other segments
-                    }
-                });
-        
-                // Create visualizer config
-                const config = {
-                    noteHeight: 4,
-                    pixelsPerTimeStep: 30,
-                    noteSpacing: 1,
-                    colorMapping: (note) => note.color
-                };
-        
-                // Create and return visualizer
-                const visualizer = new mm.PianoRollCanvasVisualizer(
-                    sequence, 
-                    document.getElementById(containerId),
-                    config
-                );
-                return visualizer;
-            }
-        
-            // Initialize all visualizers
-            visualizers[0] = await createVisualizer('vis1', 'Infilling/Example_1/original_original_10.mid');
-            visualizers[1] = await createVisualizer('vis2', 'Infilling/Example_1/amt_inpainted.mid');
-            visualizers[2] = await createVisualizer('vis3', 'Infilling/Example_1/generated_original_10.mid');
-        });
-        </script>
-
     <div class="example-tabbed">
         <div class="anchor-container">
           <a class="selected" onclick="showTab(0)">Original Composition</a>
@@ -300,10 +256,9 @@
               visualizer="#myVisualizer1"
               style="--midi-player-background: #061ffb; --midi-player-border-radius: 8px;">
             </midi-player>
-            <canvas id="vis1"></canvas>
-            <!-- <midi-visualizer src="Infilling/Example_1/original_original_10.mid" 
+            <midi-visualizer src="Infilling/Example_1/original_original_10.mid" 
                         type="piano-roll" 
-                        id="myVisualizer1"></midi-visualizer> -->
+                        id="myVisualizer1"></midi-visualizer>
         </div>
 
         <!-- Tab 2 -->
@@ -314,10 +269,9 @@
               visualizer="#myVisualizer2"
               style="--midi-player-background: #061ffb; --midi-player-border-radius: 8px;">
             </midi-player>
-            <canvas id="vis2"></canvas>
-            <!-- <midi-visualizer src="Infilling/Example_1/amt_inpainted.mid"
+            <midi-visualizer src="Infilling/Example_1/amt_inpainted.mid"
                         type="piano-roll" 
-                        id="myVisualizer2"></midi-visualizer> -->
+                        id="myVisualizer2"></midi-visualizer>
         </div>
 
         <!-- Tab 3 -->
@@ -328,10 +282,9 @@
               visualizer="#myVisualizer3"
               style="--midi-player-background: #061ffb; --midi-player-border-radius: 8px;">
             </midi-player>
-            <canvas id="vis3"></canvas>
-            <!-- <midi-visualizer src="Infilling/Example_1/generated_original_10.mid"
+            <midi-visualizer src="Infilling/Example_1/generated_original_10.mid"
                         type="piano-roll" 
-                        id="myVisualizer3"></midi-visualizer> -->
+                        id="myVisualizer3"></midi-visualizer>
         </div>
     </div>
 
@@ -346,6 +299,22 @@
           });
         }
       </script>      
+
+    <script>
+    // Add this script to handle time updates
+    document.querySelectorAll('midi-player').forEach(player => {
+        player.addEventListener('timeupdate', (e) => {
+            const visualizer = document.querySelector(player.getAttribute('visualizer'));
+            const currentTime = e.detail.currentTime;
+            
+            visualizer.querySelectorAll('rect.note').forEach(note => {
+                const start = parseFloat(note.dataset.start);
+                const isRed = start >= 20 && start < 40;
+                note.style.fill = isRed ? '#ff0000' : '#426AA0';
+            });
+        });
+    });
+    </script>
       
 
     <!-- <div style="margin-left: 5cm; margin-right: 5cm;">
