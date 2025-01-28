@@ -19,14 +19,6 @@
             margin-left: 5cm;
         }
 
-        /* midi-visualizer {
-            width: 50%;
-            max-width: 800px;
-            margin-left: 5cm;
-            display: block; 
-            margin-bottom: 20px;
-        } */
-
         /* Add this new CSS rule for the visualizer border */
         midi-visualizer {
             border: 2px solid #426AA0;
@@ -77,35 +69,35 @@
         }
 
         .anchor-container {
-    display: flex;
-    justify-content: center;
-    margin-top: 1em;
-    margin-bottom: -1px;
-  }
+            display: flex;
+            justify-content: center;
+            margin-top: 1em;
+            margin-bottom: -1px;
+        }
   
-  .anchor-container a {
-    color: #606c71;
-    display: block;
-    padding: 1rem 1.5rem;
-    margin-bottom: -1px;
-    border: 1px solid transparent;
-    border-radius: 10px 10px 0 0;
-    text-decoration: none;
-    border-color: #e0e0e0;
-    background-color: #fefefe;
-  }
-  
-  .anchor-container a.selected {
-    background: #426AA0;
-    color: #fefefe;
-    font-weight: bold;
-  }
-  
-  .anchor-container a:hover {
-    background: #426AA0;
-    color: #ffffff;
-    cursor: pointer;
-  }
+        .anchor-container a {
+            color: #606c71;
+            display: block;
+            padding: 1rem 1.5rem;
+            margin-bottom: -1px;
+            border: 1px solid transparent;
+            border-radius: 10px 10px 0 0;
+            text-decoration: none;
+            border-color: #e0e0e0;
+            background-color: #fefefe;
+        }
+        
+        .anchor-container a.selected {
+            background: #426AA0;
+            color: #fefefe;
+            font-weight: bold;
+        }
+        
+        .anchor-container a:hover {
+            background: #426AA0;
+            color: #ffffff;
+            cursor: pointer;
+        }
 
     </style>
 
@@ -243,7 +235,12 @@
     <div id="tab-contents">
         <!-- Tab 1 -->
         <div class="tab-content active">
-            <midi-player ...></midi-player>
+            <midi-player
+              src="Infilling/Example_1/original_original_10.mid"
+              sound-font
+              visualizer="#myVisualizer1"
+              style="--midi-player-background: #061ffb; --midi-player-border-radius: 8px;">
+            </midi-player>
             <midi-visualizer src="Infilling/Example_1/original_original_10.mid" 
                         type="piano-roll" 
                         id="myVisualizer1"></midi-visualizer>
@@ -251,7 +248,12 @@
 
         <!-- Tab 2 -->
         <div class="tab-content">
-            <midi-player ...></midi-player>
+            <midi-player
+              src="Infilling/Example_1/amt_inpainted.mid"
+              sound-font
+              visualizer="#myVisualizer2"
+              style="--midi-player-background: #061ffb; --midi-player-border-radius: 8px;">
+            </midi-player>
             <midi-visualizer src="Infilling/Example_1/amt_inpainted.mid"
                         type="piano-roll" 
                         id="myVisualizer2"></midi-visualizer>
@@ -259,7 +261,12 @@
 
         <!-- Tab 3 -->
         <div class="tab-content">
-            <midi-player ...></midi-player>
+            <midi-player
+              src="Infilling/Example_1/generated_original_10.mid"
+              sound-font
+              visualizer="#myVisualizer3"
+              style="--midi-player-background: #061ffb; --midi-player-border-radius: 8px;">
+            </midi-player>
             <midi-visualizer src="Infilling/Example_1/generated_original_10.mid"
                         type="piano-roll" 
                         id="myVisualizer3"></midi-visualizer>
