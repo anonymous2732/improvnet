@@ -100,13 +100,13 @@
 
         /* Add color animation rules */
         midi-visualizer svg rect.note {
-            transition: fill 0.3s ease;
+            transition: fill 0.5s ease;
         }
 
         /* Default color for all notes */
-        midi-visualizer svg rect.note {
+        /* midi-visualizer svg rect.note {
             fill: #426AA0 !important;
-        }
+        } */
 
         /* Red color for notes between 20-40 seconds */
         midi-visualizer svg rect.note[data-start^="2"][data-start*="."],
