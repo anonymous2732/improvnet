@@ -19,13 +19,32 @@
             margin-left: 5cm;
         }
 
-        midi-visualizer {
+        /* midi-visualizer {
             width: 50%;
             max-width: 800px;
             margin-left: 5cm;
-            /* height: 300px; */
             display: block; 
             margin-bottom: 20px;
+        } */
+
+        /* Add this new CSS rule for the visualizer border */
+        midi-visualizer {
+            border: 2px solid #426AA0;
+            border-radius: 8px;
+            padding: 10px;
+            margin-top: 10px;
+            /* Existing visualizer styles below */
+            width: 50%;
+            max-width: 800px;
+            margin-left: 5cm;
+            display: block; 
+            margin-bottom: 20px;
+        }
+
+        /* Add this to force visualizers to load MIDI data */
+        midi-visualizer[src] {
+            display: block !important;
+            visibility: visible !important;
         }
 
         .tabs {
@@ -219,42 +238,33 @@
           <a onclick="showTab(1)">Anticipatory Music Transformer</a>
           <a onclick="showTab(2)">ImprovNet</a>
         </div>
-      
-        <div id="tab-contents">
-          <!-- Tab 1 -->
-          <div class="tab-content active">
-            <midi-player
-              src="Infilling/Example_1/original_original_10.mid"
-              sound-font
-              visualizer="#myVisualizer1"
-              style="--midi-player-background: #061ffb; --midi-player-border-radius: 8px;">
-            </midi-player>
-            <midi-visualizer type="piano-roll" id="myVisualizer1"></midi-visualizer>
-          </div>
-      
-          <!-- Tab 2 -->
-          <div class="tab-content">
-            <midi-player
-              src="Infilling/Example_1/amt_inpainted.mid"
-              sound-font
-              visualizer="#myVisualizer2"
-              style="--midi-player-background: #061ffb; --midi-player-border-radius: 8px;">
-            </midi-player>
-            <midi-visualizer type="piano-roll" id="myVisualizer2"></midi-visualizer>
-          </div>
-      
-          <!-- Tab 3 -->
-          <div class="tab-content">
-            <midi-player
-              src="Infilling/Example_1/generated_original_10.mid"
-              sound-font
-              visualizer="#myVisualizer3"
-              style="--midi-player-background: #061ffb; --midi-player-border-radius: 8px;">
-            </midi-player>
-            <midi-visualizer type="piano-roll" id="myVisualizer3"></midi-visualizer>
-          </div>
+
+    <!-- Modify your visualizer elements to include src attributes -->
+    <div id="tab-contents">
+        <!-- Tab 1 -->
+        <div class="tab-content active">
+            <midi-player ...></midi-player>
+            <midi-visualizer src="Infilling/Example_1/original_original_10.mid" 
+                        type="piano-roll" 
+                        id="myVisualizer1"></midi-visualizer>
         </div>
-      </div>
+
+        <!-- Tab 2 -->
+        <div class="tab-content">
+            <midi-player ...></midi-player>
+            <midi-visualizer src="Infilling/Example_1/amt_inpainted.mid"
+                        type="piano-roll" 
+                        id="myVisualizer2"></midi-visualizer>
+        </div>
+
+        <!-- Tab 3 -->
+        <div class="tab-content">
+            <midi-player ...></midi-player>
+            <midi-visualizer src="Infilling/Example_1/generated_original_10.mid"
+                        type="piano-roll" 
+                        id="myVisualizer3"></midi-visualizer>
+        </div>
+    </div>
 
       <script>
         function showTab(index) {
