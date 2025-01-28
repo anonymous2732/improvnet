@@ -303,31 +303,23 @@
     <script>
     // Add this script to handle time updates
     document.querySelectorAll('midi-player').forEach(player => {
-        player.addEventListener('timeupdate', (e) => {
-            const visualizer = document.querySelector(player.getAttribute('visualizer'));
-            const currentTime = e.detail.currentTime;
-            
-            visualizer.querySelectorAll('rect.note').forEach(note => {
-                const start = parseFloat(note.dataset.start);
-                const isRed = start >= 20 && start < 40;
-                note.style.fill = isRed ? '#ff0000' : '#426AA0';
+    player.addEventListener('timeupdate', (e) => {
+        const visualizer = document.querySelector(player.getAttribute('visualizer'));
+        const currentTime = e.detail.time;
+        
+        visualizer.querySelectorAll('rect.note').forEach(note => {
+            const startTime = parseFloat(note.getAttribute('data-start'));
+            if (startTime >= 0 && startTime < 20) {
+                note.style.fill = '#426AA0'; // Blue
+            } else if (startTime >= 20 && startTime < 40) {
+                note.style.fill = '#ff0000'; // Red
+            } else {
+                note.style.fill = '#426AA0'; // Blue
+            }
             });
         });
     });
     </script>
-      
-
-    <!-- <div style="margin-left: 5cm; margin-right: 5cm;">
-        <video width="512" height="384" controls>
-            <source src="Ground_Truth_Comparison/danmark1.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
-
-        <video width="512" height="384" controls>
-            <source src="Ground_Truth_Comparison/danmark1_YY.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
-    </div> -->
 
     <br /><br /><br /><br />
     <div style="margin-left: 5cm;">
