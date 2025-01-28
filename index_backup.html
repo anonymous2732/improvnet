@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ImprovNet</title>
+    <style>
+        body {
+            font-family: Calibri, sans-serif; /* Use Calibri font with fallback to sans-serif */
+            font-size: 16px; /* Set the font size to 16 pixels */
+        }
+        .center-text {
+            text-align: center;
+        }
+
+        midi-player {
+            width: 50%;
+            max-width: 800px;
+            margin-left: 5cm;
+        }
+
+        /* Add this new CSS rule for the visualizer border */
+        midi-visualizer {
+            border: 2px solid #426AA0;
+            border-radius: 8px;
+            padding: 10px;
+            margin-top: 10px;
+            width: 50%;
+            max-width: 800px;
+            margin-left: 5cm;
+            display: block; 
+            margin-bottom: 20px;
+        }
+
+        /* Add this to force visualizers to load MIDI data */
+        midi-visualizer[src] {
+            display: block !important;
+            visibility: visible !important;
+        }
+
+        .tabs {
+        display: flex;
+        cursor: pointer;
+        margin-bottom: 20px;
+        background-color: #f1f1f1;
+        border-bottom: 2px solid #ddd;
+        }
+        .tab {
+        flex: 1;
+        padding: 10px 20px;
+        text-align: center;
+        background-color: #e6e6e6;
+        border: 1px solid #ddd;
+        border-bottom: none;
+        }
+        .tab:hover {
+        background-color: #d6d6d6;
+        }
+        .tab.active {
+        background-color: #ffffff;
+        font-weight: bold;
+        }
+        .tab-content {
+        display: none;
+        }
+        .tab-content.active {
+        display: block;
+        }
+
+        .anchor-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 1em;
+            margin-bottom: -1px;
+        }
+  
+        .anchor-container a {
+            color: #606c71;
+            display: block;
+            padding: 1rem 1.5rem;
+            margin-bottom: -1px;
+            border: 1px solid transparent;
+            border-radius: 10px 10px 0 0;
+            text-decoration: none;
+            border-color: #e0e0e0;
+            background-color: #fefefe;
+        }
+        
+        .anchor-container a.selected {
+            background: #426AA0;
+            color: #fefefe;
+            font-weight: bold;
+        }
+        
+        .anchor-container a:hover {
+            background: #426AA0;
+            color: #ffffff;
+            cursor: pointer;
+        }
+
+    </style>
+
+</head>
+<body>
+    <h1 style="margin-left: 5cm;">ImprovNet: Generating Controllable Musical Improvisations with Iterative Corruption Refinement</h1>
+    <p style="margin-left: 5cm;"><strong>Abstract</strong></p>
+    <p style="margin-left: 5cm; margin-right: 5cm;">Deep learning has enabled remarkable advances in style transfer across various domains, offering new possibilities for creative content generation. However, in the realm of symbolic music, generating controllable and expressive performance-level style transfers for complete musical works remains challenging due to limited datasets, especially for genres such as jazz, and the lack of unified models that can handle multiple music generation tasks. This paper presents ImprovNet, a transformer-based architecture that generates expressive and controllable musical improvisations through a self-supervised corruption-refinement training strategy. ImprovNet unifies multiple capabilities within a single model: it can perform cross-genre and intra-genre improvisations, harmonize melodies with genre-specific styles, and execute short prompt continuation and infilling tasks. The model's iterative generation framework allows users to control the degree of style transfer and structural similarity to the original composition. Objective and subjective evaluations demonstrate ImprovNet's effectiveness in generating musically coherent improvisations while maintaining structural relationships with the original pieces. The model outperforms Anticipatory Music Transformer in short continuation and infilling tasks and successfully achieves recognizable genre conversion, with 79\% of participants correctly identifying jazz-style improvisations.</p>
+
+    <div style="margin-left: 5cm;">
+        <h2>Style Aware Improvisations</h2>
+    </div>
+    
+    <table style="margin-left: 5cm !important; width: 80%; border-collapse: collapse; border: 2px solid black; text-align: center;">
+        <tr>
+            <th style="border: 1px solid black; text-align: center;">Original Classical Example</th>
+            <th style="border: 1px solid black; text-align: center;">Cross-Genre Improvisation (Classical -> Jazz)</th>
+            <th style="border: 1px solid black; text-align: center;">Intra-Genre Improvisation (Classical -> Classical)</th>
+        </tr>
+        <tr>
+            <td><audio src="Style_Aware_Improvisation/Example_1/original_1_5.mp3" controls ></audio></td>
+            <td><audio src="Style_Aware_Improvisation/Example_1/generated_1_5_B.mp3" controls ></audio></td>
+            <td><audio src="Style_Aware_Improvisation/Example_1/generated_1_5_A.mp3" controls ></audio></td>
+        </tr>
+        <tr>
+            <td><audio src="Style_Aware_Improvisation/Example_2/original_1_4.mp3" controls ></audio></td>
+            <td><audio src="Style_Aware_Improvisation/Example_2/generated_1_4_B.mp3" controls ></audio></td>
+            <td><audio src="Style_Aware_Improvisation/Example_2/generated_1_4_B.mp3" controls ></audio></td>
+        </tr>
+        <tr>
+            <td><audio src="Style_Aware_Improvisation/Example_3/original_1_6.mp3" controls ></audio></td>
+            <td><audio src="Style_Aware_Improvisation/Example_3/generated_1_6_B_2.mp3" controls ></audio></td>
+            <td><audio src="Style_Aware_Improvisation/Example_3/generated_1_6_A.mp3" controls ></audio></td>
+        </tr>
+        <tr>
+            <td><audio src="Style_Aware_Improvisation/Example_4/original_1_2.mp3" controls ></audio></td>
+            <td><audio src="Style_Aware_Improvisation/Example_4/generated_1_2_B.mp3" controls ></audio></td>
+            <td><audio src="Style_Aware_Improvisation/Example_4/generated_1_2_A.mp3" controls ></audio></td>
+        </tr>
+    </table>    
+
+    <div style="margin-left: 5cm;">
+        <h2>Jazz Intra-Genre Improvisations</h2>
+    </div>
+    
+    <table style="margin-left: 5cm !important; width: 80%; border-collapse: collapse; border: 2px solid black; text-align: center;">
+        <tr>
+            <th style="border: 1px solid black; text-align: center;">Original Jazz Example</th>
+            <th style="border: 1px solid black; text-align: center;">Intra-Genre Improvisation (Jazz -> Jazz)</th>
+        </tr>
+        <tr>
+            <td><audio src="Jazz_Intra_Genre_Improvisation/Example_1/Sample_2_1.mp3" controls ></audio></td>
+            <td><audio src="Jazz_Intra_Genre_Improvisation/Example_1/Sample_2_1_A.mp3" controls ></audio></td>
+        </tr>
+        <tr>
+            <td><audio src="Jazz_Intra_Genre_Improvisation/Example_2/original_2_2.mp3" controls ></audio></td>
+            <td><audio src="Jazz_Intra_Genre_Improvisation/Example_2/generated_2_2_A.mp3" controls ></audio></td>
+        </tr>
+        <tr>
+            <td><audio src="Jazz_Intra_Genre_Improvisation/Example_3/original_2_3.mp3" controls ></audio></td>
+            <td><audio src="Jazz_Intra_Genre_Improvisation/Example_3/generated_2_3_A.mp3" controls ></audio></td>
+        </tr>
+    </table>
+
+
+    <div style="margin-left: 5cm;">
+        <h2>Style Aware Harmonization</h2>
+    </div>
+    
+    <table style="margin-left: 5cm !important; width: 80%; border-collapse: collapse; border: 2px solid black; text-align: center;">
+        <tr>
+            <th style="width: 30%; border: 1px solid black; text-align: center;">Monophonic Melody Example</th>
+            <th style="width: 35%; border: 1px solid black; text-align: center;">Jazz Harmonization</th>
+            <th style="width: 35%; border: 1px solid black; text-align: center;">Classical Harmonization</th>
+        </tr>
+        <tr style="border-bottom: 1px solid black; text-align: center;">
+            <td><audio src="Style_Aware_Harmonization/Example_1/Mono_Sample_3_1.mp3" controls></audio></td>
+            <td><audio src="Style_Aware_Harmonization/Example_1/Sample_3_1_B.mp3" controls></audio></td>
+            <td><audio src="Style_Aware_Harmonization/Example_1/Sample_3_1_A.mp3" controls></audio></td>
+        </tr>
+        <tr style="border-bottom: 1px solid black; text-align: center;">
+            <td><audio src="Style_Aware_Harmonization/Example_2/Mono_original_3_2.mp3" controls></audio></td>
+            <td><audio src="Style_Aware_Harmonization/Example_2/generated_3_2_B.mp3" controls></audio></td>
+            <td><audio src="Style_Aware_Harmonization/Example_2/generated_3_2_A.mp3" controls></audio></td>
+        </tr>
+        <tr style="border-bottom: 1px solid black; text-align: center;">
+            <td><audio src="Style_Aware_Harmonization/Example_3/Mono_original_3_3.mp3" controls></audio></td>
+            <td><audio src="Style_Aware_Harmonization/Example_3/generated_3_3_B.mp3" controls></audio></td>
+            <td><audio src="Style_Aware_Harmonization/Example_3/generated_3_3_A.mp3" controls></audio></td>
+        </tr>
+    </table>
+
+
+    <div style="margin-left: 5cm;">
+        <h2>Short Prompt Continuation</h2>
+    </div>
+    
+    <table style="margin-left: 5cm !important; width: 80%; border-collapse: collapse; border: 2px solid black; text-align: center;">
+        <tr>
+            <th style="width: 30%; border: 1px solid black; text-align: center;">Prompt</th>
+            <th style="width: 35%; border: 1px solid black; text-align: center;">Anticipatory Music Transformer</th>
+            <th style="width: 35%; border: 1px solid black; text-align: center;">ImprovNet</th>
+        </tr>
+        <tr style="border-bottom: 1px solid black; text-align: center;">
+            <td><audio src="Short_Prompt_Continuation/Example_1/original_prompt.mp3" controls></audio></td>
+            <td><audio src="Short_Prompt_Continuation/Example_1/Amt_Generated_5_1.mp3" controls></audio></td>
+            <td><audio src="Short_Prompt_Continuation/Example_1/Generated_5_1.mp3" controls></audio></td>
+        </tr>
+        <tr style="border-bottom: 1px solid black; text-align: center;">
+            <td><audio src="Short_Prompt_Continuation/Example_2/original_prompt.mp3" controls></audio></td>
+            <td><audio src="Short_Prompt_Continuation/Example_2/amt_continuation_5_2.mp3" controls></audio></td>
+            <td><audio src="Short_Prompt_Continuation/Example_2/generated_5_2.mp3" controls></audio></td>
+        </tr>
+        <tr style="border-bottom: 1px solid black; text-align: center;">
+            <td><audio src="Short_Prompt_Continuation/Example_3/original_prompt.mp3" controls></audio></td>
+            <td><audio src="Short_Prompt_Continuation/Example_3/amt_continuation_5_3.mp3" controls></audio></td>
+            <td><audio src="Short_Prompt_Continuation/Example_3/generated_5_3.mp3" controls></audio></td>
+        </tr>
+    </table>
+    
+    <div style="margin-left: 5cm;">
+        <h2>Short Infilling</h2>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/combine/npm/tone@14.7.58,npm/@magenta/music@1.23.1/es6/core.js,npm/focus-visible@5,npm/html-midi-player@1.5.0"></script>
+
+    <div class="example-tabbed">
+        <div class="anchor-container">
+          <a class="selected" onclick="showTab(0)">Original Composition</a>
+          <a onclick="showTab(1)">Anticipatory Music Transformer</a>
+          <a onclick="showTab(2)">ImprovNet</a>
+        </div>
+
+    <!-- Modify your visualizer elements to include src attributes -->
+    <div id="tab-contents">
+        <!-- Tab 1 -->
+        <div class="tab-content active">
+            <midi-player
+              src="Infilling/Example_1/original_original_10.mid"
+              sound-font
+              visualizer="#myVisualizer1"
+              style="--midi-player-background: #061ffb; --midi-player-border-radius: 8px;">
+            </midi-player>
+            <midi-visualizer src="Infilling/Example_1/original_original_10.mid" 
+                        type="piano-roll" 
+                        id="myVisualizer1"></midi-visualizer>
+        </div>
+
+        <!-- Tab 2 -->
+        <div class="tab-content">
+            <midi-player
+              src="Infilling/Example_1/amt_inpainted.mid"
+              sound-font
+              visualizer="#myVisualizer2"
+              style="--midi-player-background: #061ffb; --midi-player-border-radius: 8px;">
+            </midi-player>
+            <midi-visualizer src="Infilling/Example_1/amt_inpainted.mid"
+                        type="piano-roll" 
+                        id="myVisualizer2"></midi-visualizer>
+        </div>
+
+        <!-- Tab 3 -->
+        <div class="tab-content">
+            <midi-player
+              src="Infilling/Example_1/generated_original_10.mid"
+              sound-font
+              visualizer="#myVisualizer3"
+              style="--midi-player-background: #061ffb; --midi-player-border-radius: 8px;">
+            </midi-player>
+            <midi-visualizer src="Infilling/Example_1/generated_original_10.mid"
+                        type="piano-roll" 
+                        id="myVisualizer3"></midi-visualizer>
+        </div>
+    </div>
+
+      <script>
+        function showTab(index) {
+          const tabs = document.querySelectorAll('.anchor-container a');
+          const contents = document.querySelectorAll('.tab-content');
+      
+          tabs.forEach((tab, i) => {
+            tab.classList.toggle('selected', i === index);
+            contents[i].classList.toggle('active', i === index);
+          });
+        }
+      </script>      
+      
+
+    <!-- <div style="margin-left: 5cm; margin-right: 5cm;">
+        <video width="512" height="384" controls>
+            <source src="Ground_Truth_Comparison/danmark1.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+
+        <video width="512" height="384" controls>
+            <source src="Ground_Truth_Comparison/danmark1_YY.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div> -->
+
+    <br /><br /><br /><br />
+    <div style="margin-left: 5cm;">
+        <h3>Thanks for listening!! 🎹</h3>
+    </div>
+    
+</body>
+</html>
