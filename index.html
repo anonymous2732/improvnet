@@ -98,20 +98,13 @@
             cursor: pointer;
         }
 
-        /* Add color animation rules */
         midi-visualizer svg rect.note {
-            transition: fill 0.5s ease;
+            fill: #426AA0;
+            transition: fill 0.2s ease;
         }
-
-        /* Default color for all notes */
-        /* midi-visualizer svg rect.note {
-            fill: #426AA0 !important;
-        } */
-
-        /* Red color for notes between 20-40 seconds */
-        midi-visualizer svg rect.note[data-start^="2"][data-start*="."],
-        midi-visualizer svg rect.note[data-start^="3"] {
-            fill: #ff0000 !important;
+        
+        midi-visualizer svg rect.note.highlighted {
+            fill: #ff0000;
         }
 
     </style>
@@ -301,22 +294,22 @@
       </script>      
 
     <script>
-    // Add this script to handle time updates
     document.querySelectorAll('midi-player').forEach(player => {
-    player.addEventListener('timeupdate', (e) => {
-        const visualizer = document.querySelector(player.getAttribute('visualizer'));
-        const currentTime = e.detail.time;
-        
-        visualizer.querySelectorAll('rect.note').forEach(note => {
-            const startTime = parseFloat(note.getAttribute('data-start'));
-            if (startTime >= 0 && startTime < 20) {
-                note.style.fill = '#426AA0'; // Blue
-            } else if (startTime >= 20 && startTime < 40) {
-                note.style.fill = '#ff0000'; // Red
-            } else {
-                note.style.fill = '#426AA0'; // Blue
+        player.addEventListener('timeupdate', (e) => {
+            const visualizer = document.querySelector(player.getAttribute('visualizer'));
+            const currentTime = e.detail.time;
+            
+            if (visualizer) {
+                visualizer.querySelectorAll('rect.note').forEach(note => {
+                    const startTime = parseFloat(note.getAttribute('data-start'));
+                    // Check if the note starts between 20 and 40 seconds
+                    if (startTime >= 20 && startTime < 40) {
+                        note.classList.add('highlighted');
+                    } else {
+                        note.classList.remove('highlighted');
+                    }
+                });
             }
-            });
         });
     });
     </script>
