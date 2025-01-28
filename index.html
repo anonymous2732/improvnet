@@ -98,6 +98,11 @@
             cursor: pointer;
         }
 
+        midi-visualizer svg rect.note[data-program="10"] {
+        fill: #0a0;
+        stroke: #003300;
+        }
+
         /* midi-visualizer svg rect.note {
             fill: #42a04f;
             transition: fill 1.0s ease;
@@ -244,12 +249,12 @@
         <!-- Tab 1 -->
         <div class="tab-content active">
             <midi-player
-              src="Infilling/Example_1/original_original_10.mid"
+              src="Infilling/Example_1/original_original_10_separated.mid"
               sound-font
               visualizer="#myVisualizer1"
               style="--midi-player-background: #061ffb; --midi-player-border-radius: 8px;">
             </midi-player>
-            <midi-visualizer src="Infilling/Example_1/original_original_10.mid" 
+            <midi-visualizer src="Infilling/Example_1/original_original_10_separated.mid" 
                         type="piano-roll" 
                         id="myVisualizer1"></midi-visualizer>
         </div>
@@ -257,12 +262,12 @@
         <!-- Tab 2 -->
         <div class="tab-content">
             <midi-player
-              src="Infilling/Example_1/amt_inpainted.mid"
+              src="Infilling/Example_1/amt_inpainted_separated.mid"
               sound-font
               visualizer="#myVisualizer2"
               style="--midi-player-background: #061ffb; --midi-player-border-radius: 8px;">
             </midi-player>
-            <midi-visualizer src="Infilling/Example_1/amt_inpainted.mid"
+            <midi-visualizer src="Infilling/Example_1/amt_inpainted_separated.mid"
                         type="piano-roll" 
                         id="myVisualizer2"></midi-visualizer>
         </div>
@@ -270,12 +275,12 @@
         <!-- Tab 3 -->
         <div class="tab-content">
             <midi-player
-              src="Infilling/Example_1/generated_original_10.mid"
+              src="Infilling/Example_1/generated_original_10_separated.mid"
               sound-font
               visualizer="#myVisualizer3"
               style="--midi-player-background: #061ffb; --midi-player-border-radius: 8px;">
             </midi-player>
-            <midi-visualizer src="Infilling/Example_1/generated_original_10.mid"
+            <midi-visualizer src="Infilling/Example_1/generated_original_10_separated.mid"
                         type="piano-roll" 
                         id="myVisualizer3"></midi-visualizer>
         </div>
@@ -292,27 +297,6 @@
           });
         }
       </script>      
-
-    <!-- <script>
-    document.querySelectorAll('midi-player').forEach(player => {
-        player.addEventListener('timeupdate', (e) => {
-            const visualizer = document.querySelector(player.getAttribute('visualizer'));
-            const currentTime = e.detail.time;
-            
-            if (visualizer) {
-                visualizer.querySelectorAll('rect.note').forEach(note => {
-                    const startTime = parseFloat(note.getAttribute('data-start'));
-                    // Check if the note starts between 20 and 40 seconds
-                    if (startTime >= 20 && startTime < 40) {
-                        note.classList.add('highlighted');
-                    } else {
-                        note.classList.remove('highlighted');
-                    }
-                });
-            }
-        });
-    });
-    </script> -->
 
     <br /><br /><br /><br />
     <div style="margin-left: 5cm;">
